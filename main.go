@@ -121,7 +121,8 @@ func main() {
 }
 
 func index(ctx iris.Context) {
-	ctx.Redirect("/upload")
+	//ctx.Redirect("/upload")
+	_ = ctx.View("index.html")
 }
 
 func uploadView(ctx iris.Context) {
@@ -146,17 +147,21 @@ func upload(ctx iris.Context) {
 		return
 	}
 
-	for _, upload := range uploaded {
-		fileName := upload.Filename
+	for _, u := range uploaded {
+		fileName := u.Filename
 		log.Printf("saved [%s] \n", fileName)
 
 		if strings.HasSuffix(fileName, ".tar.gz") || strings.HasSuffix(fileName, ".tar") {
 			gzProcess(fileName)
+		} else if strings.HasSuffix(fileName, ".zip") {
+			_ = unzipFile(nil, "")
 		}
 
 	}
 
-	ctx.Redirect("/files")
+	var resp = make(map[string]interface{})
+	resp["code"] = 200
+	_ = ctx.JSON(resp)
 }
 
 func gzProcess(fileName string) {
@@ -164,20 +169,20 @@ func gzProcess(fileName string) {
 	f := getFilePath(fileName)
 
 	defer func() {
-		e := deletePath(f)
+		e := deletePath(f) // 删除原文件(压缩文件)
 		if e != nil {
 			log.Printf("delete gzip fail %s\n", fileName)
 			log.Print(e)
 		}
 	}()
-	handler := TgzPacker{}
+	handler := NewTgzPacker()
 	err := handler.UnPack(f, uploadDir)
 	if err != nil {
 		log.Printf("tgz process failed: %s\n", fileName)
 	}
 }
 
-func beforeSave(ctx iris.Context, file *multipart.FileHeader) bool {
+func beforeSave(_ iris.Context, file *multipart.FileHeader) bool {
 	//ip := ctx.RemoteAddr()
 	//ip = strings.ReplaceAll(ip, ".", "_")
 	//ip = strings.ReplaceAll(ip, ":", "_")
@@ -226,7 +231,7 @@ func (tp *TgzPacker) dirExists(dir string) bool {
 	return (err == nil || os.IsExist(err)) && info.IsDir()
 }
 
-// tarFileName为待解压的tar包，dstDir为解压的目标目录
+// UnPack tarFileName为待解压的tar包，dstDir为解压的目标目录
 func (tp *TgzPacker) UnPack(tarFileName string, dstDir string) (err error) {
 	// 打开tar文件
 	fr, err := os.Open(tarFileName)
