@@ -1,0 +1,5 @@
+[web]
+listen = ":80"
+
+[fileSystem]
+root = "C:/"
