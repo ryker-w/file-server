@@ -59,7 +59,7 @@ func explorer(ctx iris.Context) {
 		return
 	}
 
-	resp, err = listDir(root)
+	resp, err = listDir(dir)
 	if err != nil {
 		log.Debug(err)
 		resp.Code = tool.RespCodeNotFound
