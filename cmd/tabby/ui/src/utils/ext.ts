@@ -5,6 +5,7 @@ const ext = {
     "txt": "icon-txt",
     "csv": "icon-file-csv",
     "pdf": "icon-file-pdf",
+    "log": "icon-log",
 
     // office
     "doc": "icon-word",
@@ -38,5 +39,7 @@ const ext = {
     "html": "icon-HTML",
     "js": "icon-js",
     "json": "icon-json",
+    "yaml": "icon-YAML",
+    "yml": "icon-YAML",
 };
 export default ext
