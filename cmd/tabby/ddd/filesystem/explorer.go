@@ -9,6 +9,7 @@ import (
 	"io/fs"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 type ExplorerReq struct {
@@ -22,8 +23,8 @@ type ExplorerResp struct {
 }
 
 type FileInfo struct {
-	Name     string `json:"name,omitempty"`
-	Category string `json:"category,omitempty"`
+	Name string `json:"name,omitempty"`
+	Ext  string `json:"ext,omitempty"`
 }
 
 func explorer(ctx iris.Context) {
@@ -58,18 +59,7 @@ func explorer(ctx iris.Context) {
 		return
 	}
 
-	err = walkFolder(root, func(path string, info os.FileInfo) {
-		if info.IsDir() {
-			resp.Folders = append(resp.Folders, info.Name())
-		} else {
-			ext := filepath.Ext(path)
-			fileInfo := FileInfo{
-				Name:     info.Name(),
-				Category: ext,
-			}
-			resp.Files = append(resp.Files, fileInfo)
-		}
-	})
+	resp, err = listDir(root)
 	if err != nil {
 		log.Debug(err)
 		resp.Code = tool.RespCodeNotFound
@@ -79,6 +69,23 @@ func explorer(ctx iris.Context) {
 
 	resp.Code = tool.RespCodeSuccess
 	tool.ResponseJSON(ctx, resp)
+}
+
+func listDir(root string) (resp ExplorerResp, err error) {
+	err = walkFolder(root, func(path string, info os.FileInfo) {
+		if info.IsDir() {
+			resp.Folders = append(resp.Folders, info.Name())
+		} else {
+			ext := filepath.Ext(path)
+			ext = strings.ToLower(strings.ReplaceAll(ext, ".", ""))
+			fileInfo := FileInfo{
+				Name: info.Name(),
+				Ext:  ext,
+			}
+			resp.Files = append(resp.Files, fileInfo)
+		}
+	})
+	return
 }
 
 func walkFolder(root string, fun func(path string, info os.FileInfo)) (err error) {

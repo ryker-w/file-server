@@ -1,15 +1,19 @@
 package filesystem
 
 import (
-	"encoding/json"
 	"testing"
 )
 
 func TestName(t *testing.T) {
-	var req = ExplorerReq{Path: []string{"/"}}
-	bs, err := json.Marshal(req)
+	resp, err := listDir(`c:\`)
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Log(string(bs))
+	for _, folder := range resp.Folders {
+		t.Logf("%s", folder)
+	}
+	for _, file := range resp.Files {
+		t.Logf("%s[%s]", file.Name, file.Ext)
+	}
+
 }
