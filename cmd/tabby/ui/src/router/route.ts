@@ -772,7 +772,7 @@ export const staticRoutes: Array<RouteRecordRaw> = [
 	 * 提示：写在这里的为全屏界面，不建议写在这里
 	 * 请写在 `dynamicRoutes` 路由数组中
 	 */
-	{
+/*	{
 		path: '/visualizingDemo1',
 		name: 'visualizingDemo1',
 		component: () => import('/@/views/visualizing/demo1.vue'),
@@ -787,5 +787,5 @@ export const staticRoutes: Array<RouteRecordRaw> = [
 		meta: {
 			title: 'message.router.visualizingLinkDemo2',
 		},
-	},
+	},*/
 ];
