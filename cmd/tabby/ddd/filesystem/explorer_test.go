@@ -19,5 +19,5 @@ func TestName(t *testing.T) {
 
 }
 func TestName1(t *testing.T) {
-	t.Log(filepath.Dir(`/a/b/c:/usr/bin`))
+	t.Log(filepath.ToSlash(filepath.Join("/ab/root/", "/m/x/v")))
 }
