@@ -46,7 +46,11 @@ service.interceptors.response.use(
 			}
 			return Promise.reject(service.interceptors.response);
 		} else {*/
-			return res;
+		// 导出报表的接口需要headers
+		if (response.headers["content-disposition"] && response.headers["content-disposition"] !== null) {
+			return response
+		}
+		return res;
 		// }
 	},
 	(error) => {
@@ -62,6 +66,29 @@ service.interceptors.response.use(
 		return Promise.reject(error);
 	}
 );
-
+export function exportXLS(url: string, params: object) {
+	return service.request({
+		method: 'POST',
+		url: url,
+		data: params,
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		responseType: 'blob'
+	}).then(res => {
+		console.log(res)
+		const link = document.createElement('a')
+		const blob = new Blob([res.data], { type: 'application/octet-stream' })
+		link.style.display = 'none'
+		link.href = URL.createObjectURL(blob)
+		let fileName = res.headers["content-disposition"]
+		console.log(fileName)
+		fileName = decodeURI(escape(fileName.substring(fileName.indexOf("=")+1)))
+		link.setAttribute('download', fileName)
+		document.body.appendChild(link)
+		link.click()
+		document.body.removeChild(link)
+	})
+}
 // 导出 axios 实例
 export default service;

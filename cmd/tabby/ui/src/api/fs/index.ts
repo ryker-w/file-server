@@ -1,4 +1,4 @@
-import request from '/@/utils/request';
+import request, {exportXLS} from '/@/utils/request';
 
 export function useFsApi() {
 	return {
@@ -16,5 +16,15 @@ export function useFsApi() {
 				data,
 			});
 		},
+		upload: (data: object) => {
+			return request({
+				url: '/api/fs/upload',
+				method: 'post',
+				data,
+			});
+		},
 	};
 }
+
+export const upload = "/api/fs/upload";
+export const downloadApi = (p: object) => exportXLS("/api/fs/download",p)
