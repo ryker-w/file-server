@@ -47,12 +47,18 @@
 <!--                <i class="icon" :class="setSVG(item.suffix)"></i>-->
               </div>
               <div style="text-align: center;padding: 14px">
-                <span style="word-break:break-all">{{ item.name }}</span>
+                <el-tooltip :content="item.name" effect="dark" placement="top-end">
+                <div class="content-span">{{ item.name }}</div>
+                </el-tooltip>
               </div>
               <div class="bottom">
                 <el-row :gutter="20">
-                  <el-col :span="12"><el-button size="mini"  icon="ele-FolderDelete" round @click="deleteFile(state.path,item.name)"
-                                                type="danger">删除
+                  <el-col :span="12">
+                    <el-button size="mini"
+                               icon="ele-FolderDelete"
+                               round
+                               @click="deleteFile(state.path,item.name)"
+                               type="danger">删除
                   </el-button></el-col>
                   <el-col :span="12">
                   </el-col>
@@ -66,7 +72,9 @@
 <!--                <i class="icon" :class="setSVG(item.suffix)"></i>-->
               </div>
               <div style="text-align: center;padding: 14px">
-                <span style="word-break:break-all">{{ item.name }}</span>
+                <el-tooltip :content="item.name" effect="dark" placement="top-end">
+                  <div class="content-span">{{ item.name }}</div>
+                </el-tooltip>
               </div>
               <div class="bottom">
                 <el-row :gutter="20">
@@ -259,5 +267,12 @@ onMounted(() => {
   fill: currentColor;
   overflow: hidden;
   font-size: 150px !important;
+}
+.content-span{
+  width: 100%;
+  overflow:hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  -o-text-overflow:ellipsis;
 }
 </style>
