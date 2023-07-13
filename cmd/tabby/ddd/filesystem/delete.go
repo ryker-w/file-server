@@ -34,12 +34,11 @@ func deleteFile(ctx iris.Context) {
 			return
 		}
 	}
-
+	relPath := filepath.Join(req.Path...)
+	log.Debug("request path:%s", relPath)
 	root := etc.Config.FileSystem.Root
-	filePath := filepath.Join(root, req.Name)
-
+	filePath := filepath.Join(root, relPath, req.Name)
 	log.Debug("delete file: [%s]%s\n", req.Name, filePath)
-
 	if err := os.RemoveAll(filePath); err != nil {
 		ctx.StopWithError(iris.StatusInternalServerError, err)
 		return

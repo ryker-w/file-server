@@ -1,8 +1,10 @@
 @font-face {
-  font-family: "iconfont"; /* Project id 4161351 */
-  src: url('iconfont.woff2?t=1689063957359') format('woff2'),
-       url('iconfont.woff?t=1689063957359') format('woff'),
-       url('iconfont.ttf?t=1689063957359') format('truetype');
+  font-family: "iconfont"; /* Project id 3860705 */
+  /* Color fonts */
+  src: 
+       url('iconfont.woff2?t=1689241606113') format('woff2'),
+       url('iconfont.woff?t=1689241606113') format('woff'),
+       url('iconfont.ttf?t=1689241606113') format('truetype');
 }
 
 .iconfont {
@@ -13,72 +15,24 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-log:before {
-  content: "\e691";
+.icon-PNG:before {
+  content: "\e69f";
 }
 
-.icon-YAML:before {
-  content: "\e625";
-}
-
-.icon-mp:before {
-  content: "\e609";
-}
-
-.icon-Vue:before {
-  content: "\e799";
-}
-
-.icon-typescript:before {
-  content: "\e6a3";
-}
-
-.icon-css:before {
-  content: "\e606";
-}
-
-.icon-jar:before {
-  content: "\e639";
-}
-
-.icon-HTML:before {
-  content: "\e620";
-}
-
-.icon-js:before {
-  content: "\e618";
-}
-
-.icon-json:before {
-  content: "\e642";
-}
-
-.icon-go:before {
-  content: "\e62d";
+.icon-txt:before {
+  content: "\e689";
 }
 
 .icon-word:before {
   content: "\e61e";
 }
 
-.icon-avi:before {
-  content: "\e692";
-}
-
-.icon-FLV:before {
-  content: "\e61f";
-}
-
 .icon-folder:before {
   content: "\e63a";
 }
 
-.icon-pdf:before {
-  content: "\e60b";
-}
-
-.icon-txt:before {
-  content: "\e689";
+.icon-log:before {
+  content: "\e691";
 }
 
 .icon-ppt:before {
@@ -89,8 +43,64 @@
   content: "\e605";
 }
 
+.icon-mp:before {
+  content: "\e609";
+}
+
+.icon-pdf:before {
+  content: "\e60b";
+}
+
 .icon-png:before {
   content: "\e607";
+}
+
+.icon-file-sql:before {
+  content: "\e64e";
+}
+
+.icon-css:before {
+  content: "\e606";
+}
+
+.icon-YAML:before {
+  content: "\e625";
+}
+
+.icon-Vue:before {
+  content: "\e799";
+}
+
+.icon-php-file:before {
+  content: "\e682";
+}
+
+.icon-file-csv:before {
+  content: "\e652";
+}
+
+.icon-go:before {
+  content: "\e62d";
+}
+
+.icon-jar:before {
+  content: "\e639";
+}
+
+.icon-avi:before {
+  content: "\e692";
+}
+
+.icon-FLV:before {
+  content: "\e61f";
+}
+
+.icon-HTML:before {
+  content: "\e620";
+}
+
+.icon-typescript:before {
+  content: "\e6a3";
 }
 
 .icon-f-gif:before {
@@ -101,52 +111,28 @@
   content: "\e603";
 }
 
+.icon-js:before {
+  content: "\e618";
+}
+
 .icon-svg:before {
   content: "\e61a";
+}
+
+.icon-json:before {
+  content: "\e642";
 }
 
 .icon-JPEG:before {
   content: "\e66d";
 }
 
-.icon-file-sql:before {
-  content: "\e64e";
-}
-
-.icon-php-file:before {
-  content: "\e682";
-}
-
-.icon-enable:before {
-  content: "\e629";
-}
-
-.icon-file-csv:before {
-  content: "\e652";
-}
-
 .icon-file-dwg:before {
   content: "\e600";
 }
 
-.icon-Files-96:before {
-  content: "\e7f7";
-}
-
 .icon-file-pdf:before {
   content: "\e601";
-}
-
-.icon-file_lnk:before {
-  content: "\e670";
-}
-
-.icon-File_Download_Fill:before {
-  content: "\e6c1";
-}
-
-.icon-File_Upload_Fill:before {
-  content: "\e6cd";
 }
 
 .icon-file:before {
