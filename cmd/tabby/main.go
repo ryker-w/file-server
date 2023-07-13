@@ -21,7 +21,6 @@ func main() {
 			fmt.Println(err)
 		}
 	}()
-
 	err := _main()
 	if err != nil {
 		fmt.Println(err)

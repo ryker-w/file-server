@@ -8,6 +8,7 @@ import other from '/@/utils/other';
 
 import ElementPlus from 'element-plus';
 import '/@/theme/index.scss';
+import '/@/theme/ali/iconfont.js'
 import VueGridLayout from 'vue-grid-layout';
 
 const app = createApp(App);

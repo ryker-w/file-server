@@ -9,16 +9,16 @@ export function useFsApi() {
 				data,
 			});
 		},
-		download: (data: object) => {
+		upload: (data: object) => {
 			return request({
-				url: '/api/fs/download',
+				url: '/api/fs/upload',
 				method: 'post',
 				data,
 			});
 		},
-		upload: (data: object) => {
+		delete: (data: object) => {
 			return request({
-				url: '/api/fs/upload',
+				url: '/api/fs/delete',
 				method: 'post',
 				data,
 			});
@@ -27,4 +27,5 @@ export function useFsApi() {
 }
 
 export const upload = "/api/fs/upload";
+
 export const downloadApi = (p: object) => exportXLS("/api/fs/download",p)

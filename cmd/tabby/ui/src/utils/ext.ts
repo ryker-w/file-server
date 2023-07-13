@@ -16,7 +16,7 @@ const ext = {
     "xlsx": "icon-excel",
 
     // image
-    "png": "icon-file-png",
+    "png": "icon-png",
     "gif": "icon-f-gif",
     "bmp": "icon-bmp",
     "svg": "icon-svg",
