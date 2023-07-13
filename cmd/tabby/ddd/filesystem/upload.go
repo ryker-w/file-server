@@ -2,7 +2,6 @@ package filesystem
 
 import (
 	"crypto/md5"
-	"fmt"
 	"github.com/kataras/iris/v12"
 	"github.com/lishimeng/app-starter"
 	"github.com/lishimeng/app-starter/tool"
@@ -13,7 +12,6 @@ import (
 	"mime/multipart"
 	"os"
 	"path/filepath"
-	"time"
 )
 
 const (
@@ -32,10 +30,9 @@ func upload(ctx iris.Context) {
 	var resp UploadResp
 	ctx.SetMaxRequestBodySize(maxSize)
 
-	folder := fmt.Sprintf("%d", time.Now().Unix())
-	root, err := os.MkdirTemp(folder, "upload-*")
+	root, err := os.MkdirTemp("", "upload-*")
 	if err != nil {
-		log.Debug(errors.Wrapf(err, "create temp folder fail: %s", folder))
+		log.Debug(errors.Wrapf(err, "create temp folder fail"))
 		resp.Code = tool.RespCodeError
 		tool.ResponseJSON(ctx, resp)
 		return
@@ -96,10 +93,11 @@ func upload(ctx iris.Context) {
 
 func beforeSave(_ iris.Context, file *multipart.FileHeader) bool {
 	// TODO
+	ext := filepath.Ext(file.Filename)
 	h := md5.New()
 	h.Write([]byte(file.Filename))
 	bs := h.Sum(nil)
-	file.Filename = string(bs)
+	file.Filename = tool.BytesToHex(bs) + ext
 	log.Debug("save file: %s\n", file.Filename)
 	return true
 }
