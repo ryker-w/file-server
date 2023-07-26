@@ -1,0 +1,141 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 3860705 */
+  /* Color fonts */
+  src: 
+       url('iconfont.woff2?t=1689241606113') format('woff2'),
+       url('iconfont.woff?t=1689241606113') format('woff'),
+       url('iconfont.ttf?t=1689241606113') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-PNG:before {
+  content: "\e69f";
+}
+
+.icon-txt:before {
+  content: "\e689";
+}
+
+.icon-word:before {
+  content: "\e61e";
+}
+
+.icon-folder:before {
+  content: "\e63a";
+}
+
+.icon-log:before {
+  content: "\e691";
+}
+
+.icon-ppt:before {
+  content: "\e8b0";
+}
+
+.icon-excel:before {
+  content: "\e605";
+}
+
+.icon-mp:before {
+  content: "\e609";
+}
+
+.icon-pdf:before {
+  content: "\e60b";
+}
+
+.icon-png:before {
+  content: "\e607";
+}
+
+.icon-file-sql:before {
+  content: "\e64e";
+}
+
+.icon-css:before {
+  content: "\e606";
+}
+
+.icon-YAML:before {
+  content: "\e625";
+}
+
+.icon-Vue:before {
+  content: "\e799";
+}
+
+.icon-php-file:before {
+  content: "\e682";
+}
+
+.icon-file-csv:before {
+  content: "\e652";
+}
+
+.icon-go:before {
+  content: "\e62d";
+}
+
+.icon-jar:before {
+  content: "\e639";
+}
+
+.icon-avi:before {
+  content: "\e692";
+}
+
+.icon-FLV:before {
+  content: "\e61f";
+}
+
+.icon-HTML:before {
+  content: "\e620";
+}
+
+.icon-typescript:before {
+  content: "\e6a3";
+}
+
+.icon-f-gif:before {
+  content: "\e60a";
+}
+
+.icon-bmp:before {
+  content: "\e603";
+}
+
+.icon-js:before {
+  content: "\e618";
+}
+
+.icon-svg:before {
+  content: "\e61a";
+}
+
+.icon-json:before {
+  content: "\e642";
+}
+
+.icon-JPEG:before {
+  content: "\e66d";
+}
+
+.icon-file-dwg:before {
+  content: "\e600";
+}
+
+.icon-file-pdf:before {
+  content: "\e601";
+}
+
+.icon-file:before {
+  content: "\e84f";
+}
+
