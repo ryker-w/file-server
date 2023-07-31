@@ -1,7 +1,6 @@
 package filesystem
 
 import (
-	"crypto/md5"
 	"github.com/kataras/iris/v12"
 	"github.com/lishimeng/app-starter"
 	"github.com/lishimeng/app-starter/tool"
@@ -9,7 +8,7 @@ import (
 	"github.com/lishimeng/file-server/internal/utils"
 	"github.com/lishimeng/go-log"
 	"github.com/pkg/errors"
-	"mime/multipart"
+	"net/url"
 	"os"
 	"path/filepath"
 )
@@ -21,6 +20,13 @@ const (
 
 type UploadResp struct {
 	app.Response
+	Items []UploadItemResp `json:"items,omitempty"`
+}
+
+type UploadItemResp struct {
+	Path string `json:"path,omitempty"`
+	Web  string `json:"web,omitempty"`
+	File string `json:"file,omitempty"`
 }
 
 // upload @[]path: 路径, @[]file: 文件
@@ -30,7 +36,7 @@ func upload(ctx iris.Context) {
 	var resp UploadResp
 	ctx.SetMaxRequestBodySize(maxSize)
 
-	root, err := os.MkdirTemp("", "upload-*")
+	uploadRoot, err := os.MkdirTemp("", "upload-*")
 	if err != nil {
 		log.Debug(errors.Wrapf(err, "create temp folder fail"))
 		resp.Code = tool.RespCodeError
@@ -38,10 +44,10 @@ func upload(ctx iris.Context) {
 		return
 	}
 	defer func() { // 清理缓存
-		_ = os.RemoveAll(root)
+		_ = os.RemoveAll(uploadRoot)
 	}()
 
-	uploaded, _, err := ctx.UploadFormFiles(root, beforeSave)
+	uploaded, _, err := ctx.UploadFormFiles(uploadRoot)
 	if err != nil {
 		log.Debug(err)
 		resp.Code = iris.StatusRequestEntityTooLarge
@@ -76,28 +82,54 @@ func upload(ctx iris.Context) {
 	}
 
 	for _, f := range files { // 保存文件:复制到指定文件夹
-		src := filepath.Join(root, f)
-		dest := filepath.Join(destDir, f)
-		err = utils.CopyFile(src, dest)
+		var destName string
+
+		destName, err = copyFile(f, uploadRoot, destDir)
 		if err != nil {
-			log.Debug(errors.Wrapf(err, "save file fail:%s", dest))
+			log.Debug(errors.Wrapf(err, "save file fail:%s[%s]", destDir, destName))
 			resp.Code = tool.RespCodeError
 			tool.ResponseJSON(ctx, resp)
 			return
 		}
+		responsePath := filepath.Join(relPath, destName)
+		responsePath = filepath.ToSlash(responsePath)
+		web, err := url.JoinPath(etc.Config.FileSystem.Domain, responsePath)
+		if err != nil {
+			log.Debug(errors.Wrapf(err, "save file fail:%s[%s]", destDir, destName))
+			resp.Code = tool.RespCodeError
+			tool.ResponseJSON(ctx, resp)
+			return
+		}
+		resp.Items = append(resp.Items, UploadItemResp{
+			Path: responsePath,
+			Web:  web,
+			File: f,
+		})
 	}
 
 	resp.Code = tool.RespCodeSuccess
 	tool.ResponseJSON(ctx, resp)
 }
 
-func beforeSave(_ iris.Context, file *multipart.FileHeader) bool {
-	// TODO
-	ext := filepath.Ext(file.Filename)
-	h := md5.New()
-	h.Write([]byte(file.Filename))
-	bs := h.Sum(nil)
-	file.Filename = tool.BytesToHex(bs) + ext
-	log.Debug("save file: %s\n", file.Filename)
-	return true
+func copyFile(f, srcDir, destDir string) (fileName string, err error) {
+	/// 名字处理
+	ext := filepath.Ext(f)
+	src := filepath.Join(srcDir, f)
+	fileName, err = utils.FileDigest(src)
+	if err != nil {
+		return
+	}
+	fileName = fileName + ext
+	///
+
+	dest := filepath.Join(destDir, fileName)
+
+	if err != nil {
+		return
+	}
+	err = utils.CopyFile(src, dest)
+	if err != nil {
+		return
+	}
+	return
 }

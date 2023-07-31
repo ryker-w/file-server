@@ -27,6 +27,7 @@
             :show-file-list="false"
             :on-success="onSuccess"
             :on-error="onError"
+            :before-upload="beforeUpload"
         >
           <el-icon class="el-icon-upload">
             <upload-filled/>
@@ -105,6 +106,7 @@ import {downloadApi, upload, useFsApi} from "/@/api/fs";
 import {ElMessage, ElMessageBox} from "element-plus";
 import Ext from "/@/utils/ext";
 import "../../../theme/ali/iconfont.css";
+
 const ext = Ext
 
 const route = useRoute()
@@ -118,8 +120,14 @@ const state = reactive({
   datas: [],
   routes: [],
   folderCount: 0,
-  fileCount: 0
+  fileCount: 0,
 });
+const beforeUpload = (file: any) => {
+  const m = 1024*1024
+  const limit = 50 // 50M
+  let fileSizeM = file.size / m
+  return fileSizeM < limit
+}
 const deleteFile = (path: any, name: any) => {
   ElMessageBox.confirm(`此操作将永久删除文件, 是否继续?`, '提示', {
     confirmButtonText: '删除',
