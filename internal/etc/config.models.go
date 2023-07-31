@@ -11,5 +11,6 @@ type web struct {
 }
 
 type fileSystem struct {
-	Root string `toml:"root"`
+	Root   string `toml:"root"`
+	Domain string `toml:"domain"`
 }
